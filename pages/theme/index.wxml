@@ -1,0 +1,9 @@
+<view class="container theme-container">
+    <view class="theme-header">
+        <image src="{{theme.theme_pic}}" mode="aspectFill" />
+    </view>
+    <view class="theme-main">
+        <!--单品-->
+        <v-product products="{{theme.products}}"/>
+    </view>
+</view>

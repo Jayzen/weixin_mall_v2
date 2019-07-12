@@ -1,0 +1,11 @@
+<view class="products-box">
+    <block wx:for="{{products}}" wx:key="">
+        <view class="products-item" bindtap="onProductsItemTap" data-id="{{item.id}}">
+            <image class="products-image" src="{{item.pic}}" mode="aspectFill"></image>
+            <view class="products-item-bottom">
+                <text class="name">{{item.name}}</text>
+                <view class="price">￥{{item.current_price}}</view>
+            </view>
+        </view>
+    </block>
+</view>

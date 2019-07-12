@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "食品分类",
+    "usingComponents": {
+        "v-category": "/components/category/index"
+    }
+}
