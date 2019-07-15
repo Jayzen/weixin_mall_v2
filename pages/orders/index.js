@@ -4,22 +4,55 @@ import {
 
 const orderModel = new OrderModel()
 
+
 Page({
     data: {
-
+        orderArr: null
     },
 
-    onLoad: function () {
-        this._loadData();
+    onLoad: function (options) {    
+        if(options.status){
+            orderModel.getOrder(options.status)
+                .then(res => {
+                    this.setData({
+                        orderArr: res
+                    })
+                })
+                .catch(res => {
+                    console.log(res);
+                })
+        } else {
+            orderModel.getOrders()
+                .then(res => {
+                    this.setData({
+                        orderArr: res
+                    })
+                })
+                .catch(res => {
+                    console.log(res);
+                })
+        }
     },
 
-    _loadData: function (callback) {
+    onTapOrders: function (e) {
         orderModel.getOrders()
             .then(res => {
                 this.setData({
                     orderArr: res
                 })
-                callback && callback();
+            })
+            .catch(res => {
+                console.log(res);
+            })
+    },
+
+    onTapOrder: function (e) {
+        const status = e.currentTarget.dataset.status
+        orderModel.getOrder(status)
+            .then(res => {
+                this.setData({
+                    orderArr: res
+                })
             })
             .catch(res => {
                 console.log(res);
@@ -27,9 +60,7 @@ Page({
     },
 
     onPullDownRefresh: function () {
-        this._loadData(() => {
-            wx.stopPullDownRefresh()
-        });
+        wx.stopPullDownRefresh()
     },
 
     onShareAppMessage: function () {

@@ -26,6 +26,8 @@ Page({
         this.setData({
             loadingHidden: true
         });
+
+        callback && callback()
     },
 
     editAddress: function (event) {
@@ -73,7 +75,7 @@ Page({
 
     onTapPay(event) {
         wx.navigateTo({
-            url: `/pages/directly-pay/index`
+            url: `/pages/pay-directly/index`
         })
     },
 
@@ -86,6 +88,13 @@ Page({
     onTapOrders: function (e) {
         wx.navigateTo({
             url: '/pages/orders/index'
+        })
+    },
+
+    onTapOrder: function(e){
+        const status = e.currentTarget.dataset.status
+        wx.navigateTo({
+            url: '/pages/orders/index?status=' + status
         })
     },
 

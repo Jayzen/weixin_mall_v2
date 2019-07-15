@@ -20,6 +20,12 @@ class OrderModel extends HTTP {
             url: 'orders',
         })
     }
+
+    getOrder(status){
+        return this.request({
+            url: 'order/' + status
+        })
+    }
 }
 
 export {

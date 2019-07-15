@@ -1,5 +1,11 @@
 @import "/overall/base.wxss";
 
+
+.order-header{
+    display: flex;
+    justify-content: space-between;
+}
+
 .my-container{
     background-color:#EDEDED;
 }

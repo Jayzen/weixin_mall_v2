@@ -8,10 +8,18 @@
     <text class="name">{{userInfo.nickName}}</text>
   </view>
   
-  <view>
+  <view class="my-order">
     <view>我的订单</view>
     <view ontap="onTapOrders">查看全部</view>
   </view>
+
+  <view class="my-order">
+    <view bind:tap="onTapOrder" data-status='0'>待付款</view>
+    <view bind:tap="onTapOrder" data-status='1'>已付款</view>
+    <view bind:tap="onTapOrder" data-status='2'>已发货</view>
+    <view bind:tap="onTapOrder" data-status='3'>已收货</view>
+  </view>
+
   <view class="my-set">
       <view class="item-title" ontap="editAddress">
         地址管理

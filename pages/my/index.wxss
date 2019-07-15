@@ -23,6 +23,11 @@
     background-color: #fff;
 }
 
+.my-order{
+    display: flex;
+    justify-content: space-between;
+}
+
 .section{
     border-bottom:1rpx solid #E9E9E9;
     margin-left:30rpx;

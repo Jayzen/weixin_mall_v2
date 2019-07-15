@@ -1,3 +1,11 @@
+<view class="order-header">
+  <view ontap="onTapOrders">全部订单</view>
+  <view bind:tap="onTapOrder" data-status='0'>待付款</view>
+  <view bind:tap="onTapOrder" data-status='1'>已付款</view>
+  <view bind:tap="onTapOrder" data-status='2'>已发货</view>
+  <view bind:tap="onTapOrder" data-status='3'>已收货</view>
+</view>
+
 <view class="my-order">
     <view class="item-title">我的订单</view>
     <view class="item-main">

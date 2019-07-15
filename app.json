@@ -8,7 +8,7 @@
         "pages/my/index",
         "pages/cart/index",
         "pages/pay-result/index",
-        "pages/directly-pay/index",
+        "pages/pay-directly/index",
         "pages/support/index",
         "pages/orders/index"
     ],
