@@ -3,11 +3,14 @@ import {
 } from '../../models/address'
 import {
     CartModel
-} from '../../models/cart.js';
+} from '../../models/cart'
+import {
+    OrderModel
+} from '../../models/order'
 
-const cartModel = new CartModel();
+const cartModel = new CartModel()
 const addressModel = new AddressModel()
-
+const orderModel = new OrderModel()
 
 Page({
     data: {
@@ -73,6 +76,60 @@ Page({
     _bindAddressInfo: function(addressInfo) {
         this.setData({
             addressInfo: addressInfo
+        });
+    },
+
+    /*下单和付款*/
+    pay: function () {
+        if (!this.data.addressInfo) {
+            this.showTips('下单提示', '请填写您的收货地址');
+            return;
+        }
+        if (this.data.orderStatus == 0) {
+            this._firstTimePay();
+        } else {
+            this._oneMoresTimePay();
+        }
+    },
+
+    /*第一次支付*/
+    _firstTimePay: function () {
+        var orderInfo = []
+        var procuctInfo = this.data.productsArr
+        for (let i = 0; i < procuctInfo.length; i++) {
+            orderInfo.push({
+                product_id: procuctInfo[i].id,
+                count: procuctInfo[i].counts
+            });
+        }
+        var that = this;
+        //支付分两步，第一步是生成订单号，然后根据订单号支付
+        orderModel.createOrder(orderInfo)
+            .then(res=>{
+                console.log(res)
+            }, res=>{console.log("error")
+            })
+    },
+
+    /*
+        * 提示窗口
+        * params:
+        * title - {string}标题
+        * content - {string}内容
+        * flag - {bool}是否跳转到 "我的页面"
+        */
+    showTips: function (title, content, flag) {
+        wx.showModal({
+            title: title,
+            content: content,
+            showCancel: false,
+            success: function (res) {
+                if (flag) {
+                    wx.switchTab({
+                        url: '/pages/my/index'
+                    });
+                }
+            }
         });
     },
 

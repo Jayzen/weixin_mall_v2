@@ -1,66 +1,100 @@
-// pages/my/index.js
+import {
+    AddressModel
+} from '../../models/address'
+import {
+    GuestModel
+} from '../../models/guest'
+
+const guestModel = new GuestModel()
+const addressModel = new AddressModel()
+
 Page({
-
-    /**
-     * 页面的初始数据
-     */
     data: {
-
+        authorized: false,
+        userInfo: null,
+        loadingHidden: false,
+        orderArr: null
     },
 
-    /**
-     * 生命周期函数--监听页面加载
-     */
     onLoad: function (options) {
-
+        this._loadData();
     },
 
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
+    _loadData: function (callback) {
+        this.userAuthorized()
 
+        this.setData({
+            loadingHidden: true
+        });
     },
 
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
+    editAddress: function (event) {
+        var that = this;
+        wx.chooseAddress({
+            success: function (res) {
+                addressModel.updateAddress(res)
+                    .then(res => {
+                        console.log(res)
+                    })
+                    .catch(res => {
+                        console.log(res);
+                    })
+            }
+        })
     },
 
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
+    userAuthorized() {
+        wx.getSetting({
+            success: data => {
+                if (data.authSetting['scope.userInfo']) {
+                    wx.getUserInfo({
+                        success: data => {
+                            this.setData({
+                                authorized: true,
+                                userInfo: data.userInfo
+                            })
+                        }
+                    })
+                }
+            }
+        })
     },
 
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
+    onGetUserInfo(event) {
+        const userInfo = event.detail.userInfo;
+        if (userInfo) {
+            this.setData({
+                authorized: true,
+                userInfo: userInfo
+            })
+        }
+        guestModel.updateGuest(userInfo.nickName, userInfo.avatarUrl);
     },
 
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
+    onTapPay(event) {
+        wx.navigateTo({
+            url: `/pages/directly-pay/index`
+        })
+    },
+
+    onTapSupport: function (e) {
+        wx.navigateTo({
+            url: '/pages/support/index'
+        })
+    },
+
+    onTapOrders: function (e) {
+        wx.navigateTo({
+            url: '/pages/orders/index'
+        })
+    },
+
     onPullDownRefresh: function () {
-
+        this._loadData(() => {
+            wx.stopPullDownRefresh()
+        });
     },
 
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
+    onShareAppMessage: function () { 
     }
 })

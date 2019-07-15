@@ -1,2 +1,33 @@
-<!--pages/my/index.wxml-->
-<text>pages/my/index.wxml</text>
+
+<view class="container my-container" hidden="{{!loadingHidden}}">
+  <view class="my-header">
+  <button wx:if="{{!authorized}}" open-type="getUserInfo" bind:getuserinfo="onGetUserInfo" class="submit">
+                评论(未登录)
+            </button>
+    <image src="{{userInfo.avatarUrl}}"></image>
+    <text class="name">{{userInfo.nickName}}</text>
+  </view>
+  
+  <view>
+    <view>我的订单</view>
+    <view ontap="onTapOrders">查看全部</view>
+  </view>
+  <view class="my-set">
+      <view class="item-title" ontap="editAddress">
+        地址管理
+        <image src="../../imgs/icon/arrow@right.png"></image>
+      </view>
+      <view class="item-title" ontap="onTapPay">
+        到店买单
+        <image src="../../imgs/icon/arrow@right.png"></image>
+      </view>
+      <view class="item-title" ontap="onTapSupport">
+        做一样的小程序
+        <image src="../../imgs/icon/arrow@right.png"></image>
+      </view>      
+  </view>
+
+</view>
+<loading hidden="{{loadingHidden}}">
+  加载中...
+</loading>

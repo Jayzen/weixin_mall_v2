@@ -6,7 +6,11 @@
         "pages/order/index",
         "pages/category/index",
         "pages/my/index",
-        "pages/cart/index"
+        "pages/cart/index",
+        "pages/pay-result/index",
+        "pages/directly-pay/index",
+        "pages/support/index",
+        "pages/orders/index"
     ],
     "window": {
         "navigationBarTitleText": "小程序",
