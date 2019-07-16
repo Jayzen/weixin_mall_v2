@@ -7,10 +7,15 @@ import {
 import {
     OrderModel
 } from '../../models/order'
+import {
+    PayModel
+} from '../../models/pay'
+
 
 const cartModel = new CartModel()
 const addressModel = new AddressModel()
 const orderModel = new OrderModel()
+const payModel = new PayModel()
 
 Page({
     data: {
@@ -106,9 +111,24 @@ Page({
         //支付分两步，第一步是生成订单号，然后根据订单号支付
         orderModel.createOrder(orderInfo)
             .then(res=>{
-                console.log(res)
-            }, res=>{console.log("error")
+                return payModel.createOrderPay(this.data.account)
             })
+            .then(res=>{
+                console.log(res)
+                wx.requestPayment({
+                    timeStamp: res.timeStamp,
+                    nonceStr: res.nonceStr,
+                    package: res.package,
+                    signType: 'MD5',
+                    paySign: res.paySign,
+                    // success(res) {console.log(res)},
+                    fail(res) { },
+                    complete(res){console.log(res)}
+                })
+            }).
+            catch(res => {
+                console.log(res);
+            })      
     },
 
     /*

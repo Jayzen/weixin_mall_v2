@@ -22,7 +22,9 @@ Page({
                     package: res.package,
                     signType: 'MD5',
                     paySign: res.paySign,
-                    success(res) { },
+                    success(res) {
+                        console.log(res)
+                     },
                     fail(res) { }
                 })
                 this.setData({
