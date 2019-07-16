@@ -5,4 +5,4 @@ const config = {
     // appkey: "vwjbebzq5u"
 }
 
-export { config }
+export { config } 
